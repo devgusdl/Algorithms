@@ -1,0 +1,11 @@
+select A.APNT_NO,P.PT_NAME,A.PT_NO,A.MCDP_CD,D.DR_NAME,A.APNT_YMD
+from (
+    select APNT_NO,PT_NO,MCDP_CD, MDDR_ID,APNT_YMD
+    from APPOINTMENT 
+    where date_format(APNT_YMD, '%Y-%m-%d') = '2022-04-13' 
+      and APNT_CNCL_YN = 'N'
+) as A
+LEFT join PATIENT P ON A.PT_NO = P.PT_NO
+LEFT JOIN DOCTOR D ON A.MDDR_ID = D.DR_ID
+WHERE A.MCDP_CD = 'CS'
+ORDER BY A.APNT_YMD
